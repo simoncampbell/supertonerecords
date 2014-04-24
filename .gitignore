@@ -1,0 +1,9 @@
+!.gitignore
+.DS_Store
+*.pyc
+.sass-cache
+
+craft/storage
+
+# Static
+public/media

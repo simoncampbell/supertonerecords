@@ -1,0 +1,24 @@
+%lede,
+.lede {
+	font-size: 120%;
+}
+
+
+.type {
+
+	p {
+		margin-bottom: 10px;
+		
+		line-height: 1.5;
+	}
+}
+
+
+.type-intro {
+	p {
+
+		&:first-of-type {
+			@extend %lede;
+		}
+	}
+}
