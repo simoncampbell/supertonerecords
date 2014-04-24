@@ -15,12 +15,12 @@ return array(
     ),
 
     'supertone.craft.dev' => array(
-    	'siteUrl' => 'supertone.craft.dev',
+    	'siteUrl' => 'http://supertone.craft.dev',
         'devMode' => true,
     ),
 
     'supertone.sitestaged.com' => array(
-    	'siteUrl' => 'supertone.sitestaged.com',
+    	'siteUrl' => 'http://supertone.sitestaged.com',
         'cooldownDuration' => 0,
     )
 );
