@@ -27,13 +27,11 @@ return array(
         'database' => 'supertone_stage',
     ),
 
-    // 'lebridge.co.uk' => array(
-    //     'server' => 'localhost',
-    //     'user' => 'lebridge_staging',
-    //     'password' => 'REZLVsJJYVERyJTuPN3VvGxBZnNd2h',
-    //     'database' => 'lebridge_staging',
-    // ),
+    'supertonerecords.com' => array(
+        'server' => 'localhost',
+        'user' => 'supertone_prod',
+        'password' => 'REZLVsJJYVERyJTuPN3VvGxBZnNd2h',
+        'database' => 'supertone_prod',
+    ),
 
 );
-
-
