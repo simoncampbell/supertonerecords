@@ -12,9 +12,12 @@
 
 
 @import "partials/global",
-		"partials/type";
+		"partials/type",
+		"partials/forms",
+		"partials/sidebar";
 
 
 
 
-@import "modules/tabs";
+@import "modules/tabs",
+		"modules/btn";

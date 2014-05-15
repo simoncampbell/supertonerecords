@@ -53,23 +53,7 @@ body {
 	}
 }
 
-.info {
-	// padding: 0 15px;
 
-	@include media($desk-and-up) {
-		float: left;
-		width: 285px;
-		padding: 0 30px;
-		padding-top: 150px;
-	}
-
-
-	p {
-		color: #999;
-	}
-
-	
-}
 
 .page {
 	max-width: 320px;

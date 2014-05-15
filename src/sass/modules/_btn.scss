@@ -1,39 +1,47 @@
-.btn {
-	display: inline-block;
-	vertical-align: middle;
-	white-space: nowrap;
-	font-family: inherit;
-	font-size: 85%;
-	cursor: pointer;
-	border: none;
-	border-bottom: 2px solid darken(#C76229, 5);
-	margin: 0;
-	background-color: #C76229;
-	color: #fff;
-	border-radius: 4px;
-	overflow: visible;
-	text-decoration: none;
-	text-transform: uppercase;
-
-	line-height: 3;
-	height: 3em;
-	padding: 0 1.5em;
-
-	&:hover, &:active, &:focus, &:visited {
-		text-decoration: none;
-	}
-
-	&:hover {
-		background: darken(#C76229, 5);
-	}
-
-	&:active, &:focus {
-		outline:none;
-		background: darken(#C76229, 5);
-	}
-
-	&::-moz-focus-inner {
-		border: 0;
-		padding: 0;
-	}
+%button {
+  	@include button(simple, red);
+  	-webkit-font-smoothing: antialiased;
+  	// font-size: $base-font-size;
+  	font-weight: bold;
+  	line-height: 1em;
 }
+
+// .btn {
+// 	display: inline-block;
+// 	vertical-align: middle;
+// 	white-space: nowrap;
+// 	font-family: inherit;
+// 	font-size: 85%;
+// 	cursor: pointer;
+// 	border: none;
+// 	border-bottom: 2px solid darken(#C76229, 5);
+// 	margin: 0;
+// 	background-color: #C76229;
+// 	color: #fff;
+// 	border-radius: 4px;
+// 	overflow: visible;
+// 	text-decoration: none;
+// 	text-transform: uppercase;
+
+// 	line-height: 3;
+// 	height: 3em;
+// 	padding: 0 1.5em;
+
+// 	&:hover, &:active, &:focus, &:visited {
+// 		text-decoration: none;
+// 	}
+
+// 	&:hover {
+// 		background: darken(#C76229, 5);
+// 	}
+
+// 	&:active, &:focus {
+// 		outline:none;
+// 		background: darken(#C76229, 5);
+// 	}
+
+// 	&::-moz-focus-inner {
+// 		border: 0;
+// 		padding: 0;
+// 	}
+// }
