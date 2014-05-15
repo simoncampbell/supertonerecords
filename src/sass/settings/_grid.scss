@@ -1,0 +1,24 @@
+@import "../tools/neat/neat-helpers";
+
+$max-width: 1300px;
+// $column: 90px;
+// $gutter: 10px;
+$grid-columns: 2;
+
+$visual-grid: false;
+$visual-grid-index: front;
+$visual-grid-color: #000;
+
+$palm-end: 599px;
+$lap-start: 600px;
+$lap-end: 884px;
+$desk-start: 885px;
+$desk-end: 1259px;
+$desk-wide-start: 1260px;
+
+$palm: new-breakpoint(max-width $palm-end 2);
+$lap: new-breakpoint(min-width $lap-start max-width $lap-end 8);
+$lap-and-up: new-breakpoint(min-width $lap-start 12);
+$portable: new-breakpoint(max-width $lap-end 12);
+$desk-and-up: new-breakpoint(min-width $desk-start 12);
+$desk-wide-and-up: new-breakpoint(min-width $desk-wide-start 12);

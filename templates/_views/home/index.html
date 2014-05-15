@@ -1,0 +1,264 @@
+{% extends "_layouts/base" %}
+
+{% block content %}
+    
+    <ul class="tabs page-tabs">
+        <li class="tabs__item is-active">
+            <a class="tabs__link" data-tab="updates" href="#">Updates</a>
+        </li>
+        <li class="tabs__item">
+            <a class="tabs__link" data-tab="about" href="#">About</a>
+        </li>
+    </ul>
+
+    <div class="sidebar tab-content" data-tab-content="about">
+
+        <div class="type type-intro">
+
+            {{ about.introduction|markdown }}
+
+        </div>
+
+        {#
+
+        <div class="sidebar__block newsletter">
+
+            <h3 class="sidebar__block__hx">Newsletter</h3>
+
+            <form>
+                <fieldset class="type">
+
+                    
+
+                    <p>Signup for email updates from Supertone.</p>
+
+                    <div>
+                        <label>Your name</label>
+                        <input type="text" name="" id="" value="" />
+                    </div>
+
+                    <div>
+                        <label>Your email</label>
+                        <input type="text" name="" id="" value="" />
+                    </div>
+
+                    <button class="btn" type="submit">Subscribe</button>
+
+                </fieldset>
+            </form>
+
+        </div>
+
+        <div class="sidebar__block elsewhere">
+
+            <h3 class="sidebar__block__hx">Elsewhere</h3>
+
+        </div>
+
+        #}
+
+    </div>
+
+    <div class="page__body main tab-content is-active js-tiles" data-tab-content="updates">
+
+        {% for newsEntry in craft.entries.section('news').limit(20) %}
+
+            <div class="box box--{{ newsEntry.tileSize }}">
+
+                <div class="post">
+                    
+                    {% set mainImage = newsEntry.image.first() %}
+
+                    {% if mainImage %}
+                        <div class="post__media media">
+
+                            {% if newsEntry.primaryUrl %}
+                                <a href="{{ newsEntry.primaryUrl }}">
+                            {% endif %}
+
+                            {% if newsEntry.tileSize == "small" %}
+                                <img class="media__object" src="{{ mainImage.getUrl('small') }}" width="{{ mainImage.getWidth('small') }}" height="{{ mainImage.getHeight('small') }}" alt="" />
+                            {% else %}
+                                <img class="media__object" src="{{ mainImage.getUrl('medium') }}" width="{{ mainImage.getWidth('medium') }}" height="{{ mainImage.getHeight('medium') }}" alt="" />
+                            {% endif %}
+                            {% if newsEntry.hasMedia %}
+                                <div class="media__play"></div>
+                            {% endif %}
+
+                            {% if newsEntry.primaryUrl %}
+                                </a>
+                            {% endif %}
+
+                        </div>
+                    {% endif %}
+
+                    <div class="post__body body copy">
+
+                        {% if newsEntry.hideTitle != true %}
+                            <h2 class="body__title">
+                            
+                                {% if newsEntry.primaryUrl %}
+                                    <a href="{{ newsEntry.primaryUrl }}">
+                                {% endif %}
+
+                                    {{ newsEntry.title }}
+
+                                {% if newsEntry.primaryUrl %}
+                                    </a>
+                                {% endif %}
+
+                            </h2>
+                        {% endif %}
+                        
+                        {{ newsEntry.introduction|markdown }}
+
+                        {% if newsEntry.secondaryTitle and newsEntry.secondaryUrl %}
+                            <p class="body__action"><a href="{{ newsEntry.secondaryUrl }}">{{ newsEntry.secondaryTitle }}</a></p>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+        
+        {% endfor %}
+
+        {#
+
+        <div class="box box--small">
+
+            <div class="post">
+                
+                <div class="post__media media">
+                    <img src="/static/images/dev/halos.jpg" />
+                    <div class="media__play"></div>
+                </div>
+
+                <div class="post__body body copy">
+
+                    <h2 class="body__title"><a href="">Happiness in Halos</a></h2>
+
+                    <p>Immediate download of Happiness in Halos in the high-quality format of your choice (MP3, FLAC, and more), plus unlimited mobile access using the free Bandcamp listening app.</p>
+
+                    <p class="body__action"><a href="">Buy now</a></p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        
+
+        <div class="box box--small">
+
+            <div class="post">
+                
+                <div class="post__media media">
+                    <img src="/static/images/dev/simon2.jpg" />
+                    <div class="media__play"></div>
+                </div>
+
+                <div class="post__body body copy">
+
+                    <h2 class="body__title"><a href="">ThirtySix: Added Tracks</a></h2>
+
+                    <p>Immediate download of 4-track album in the high-quality format of your choice (MP3, FLAC, and more), plus unlimited mobile access using the free Bandcamp listening app.</p>
+
+                    <p class="body__action"><a href="">Buy now</a></p>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="box box--small">
+
+            <div class="post">
+                
+                <div class="post__media">
+                    <img src="/static/images/dev/pressing.jpg" />
+                </div>
+
+                <div class="post__body copy">
+                    <p>Test pressing for the three track Electrolite 12" 45 received yesterday from the pressing plant in Germany. It sounds fantastic and should be released in the next six weeks!</p>
+
+                    <p>Recorded at The Chairworks Studios and mastered by Kevin Grainger at Wired Masters.</p>
+
+                    <p>The sound of summer 2014.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="box box--small">
+
+            <div class="post">
+                
+                <div class="post__media media">
+                    <img src="/static/images/dev/36.jpg" />
+                    <div class="media__play"></div>
+                </div>
+
+                <div class="post__body body copy">
+
+                    <h2 class="body__title"><a href="">ThirtySix</a></h2>
+
+                    <p>Immediate download of 12-track album in the high-quality format of your choice (MP3, FLAC, and more), plus unlimited mobile access using the free Bandcamp listening app.</p>
+
+                    <p class="body__action"><a href="">Buy now</a></p>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="box box--small">
+
+            <div class="post">
+                
+                <div class="post__media">
+                    <img src="/static/images/dev/electrolite.gif" />
+                </div>
+
+                <div class="post__body body copy">
+
+                    <p>Posts don't always have to have titles. They don't have to link anywhere either if it's not necessary.</p>
+
+                    <p class="body__action"><a href="">A link</a></p>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="box box--small">
+
+            <div class="post">
+
+                <div class="post__body body copy">
+
+                    <h2 class="body__title"><a href="">A post title</a></h2>
+
+                    <p>This is the content. It can go on for as long as you like but short, snappy paragraphs will probably work best. Images are optional.</p>
+
+                    <p class="body__action"><a href="">You can include a link</a></p>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+        #}
+
+    </div> <!-- end .main -->
+
+{% endblock %}

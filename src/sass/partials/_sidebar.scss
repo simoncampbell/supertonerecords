@@ -1,0 +1,33 @@
+.sidebar {
+	// padding: 0 15px;
+
+	@include media($desk-and-up) {
+		float: left;
+		width: 285px;
+		padding: 0 30px;
+		padding-top: 150px;
+	}
+
+
+	p {
+		color: #999;
+	}
+
+	label {
+		color: #999;
+	}
+}
+
+
+.sidebar__block {
+	margin: 0 -30px;
+	padding: 30px;
+
+	border-top: 1px dotted #444;
+}
+
+.sidebar__block__hx {
+	margin-bottom: 15px;
+	
+	color: #e9e9e9;
+}
