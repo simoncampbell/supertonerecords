@@ -6,5 +6,5 @@
 craft/storage
 
 # Static
-public/media
-
+public/media/*
+!public/media/index.html
