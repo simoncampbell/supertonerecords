@@ -22,5 +22,10 @@ return array(
     'supertone.sitestaged.com' => array(
     	'siteUrl' => 'http://supertone.sitestaged.com',
         'cooldownDuration' => 0,
+    ),
+
+    'supertonerecords.com' => array(
+        'siteUrl' => 'http://supertonerecords.com',
+        'cooldownDuration' => 0,
     )
 );
