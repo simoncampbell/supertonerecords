@@ -1,0 +1,100 @@
+[
+    {
+        "name": "vipsoft/unzip",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vipsoft/Unzip.git",
+            "reference": "e5575c8ebea67e3cac070dc69b9d89e13839cf97"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vipsoft/Unzip/zipball/e5575c8ebea67e3cac070dc69b9d89e13839cf97",
+            "reference": "e5575c8ebea67e3cac070dc69b9d89e13839cf97",
+            "shasum": ""
+        },
+        "require": {
+            "ext-zip": "*",
+            "php": ">=5.3.6"
+        },
+        "time": "2014-03-05 17:55:18",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "VIPSoft\\Unzip": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anthon Pang",
+                "email": "apang@softwaredevelopment.ca",
+                "role": "developer"
+            }
+        ],
+        "description": "Unzip library - a ZipArchive wrapper",
+        "homepage": "http://github.com/vipsoft/",
+        "keywords": [
+            "pclzip",
+            "unzip",
+            "zip",
+            "ziparchive"
+        ]
+    },
+    {
+        "name": "symfony/filesystem",
+        "version": "2.3.x-dev",
+        "version_normalized": "2.3.9999999.9999999-dev",
+        "target-dir": "Symfony/Component/Filesystem",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/Filesystem.git",
+            "reference": "8e7c8482b6fa390b345b272cdbad1dc706fe7bd6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/Filesystem/zipball/8e7c8482b6fa390b345b272cdbad1dc706fe7bd6",
+            "reference": "8e7c8482b6fa390b345b272cdbad1dc706fe7bd6",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2014-03-26 07:33:01",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.3-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\Filesystem\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com",
+                "homepage": "http://fabien.potencier.org",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Filesystem Component",
+        "homepage": "http://symfony.com"
+    }
+]
