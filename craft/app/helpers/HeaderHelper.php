@@ -21,7 +21,7 @@ class HeaderHelper
 	public static function setContentTypeByExtension($extension)
 	{
 		$extension = strtolower($extension);
-		$mimeTypes = require_once(Craft::getPathOfAlias('app.framework.utils.mimeTypes').'.php');
+		$mimeTypes = require(Craft::getPathOfAlias('app.framework.utils.mimeTypes').'.php');
 
 		if (!array_key_exists($extension, $mimeTypes))
 		{

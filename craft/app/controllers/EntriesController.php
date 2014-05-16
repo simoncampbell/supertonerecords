@@ -208,7 +208,7 @@ class EntriesController extends BaseController
 		}
 		else
 		{
-			$variables['title'] = $variables['entry']->title;
+			$variables['title'] = Craft::t($variables['entry']->title);
 
 			if (craft()->getEdition() >= Craft::Client && $variables['entry']->getClassHandle() != 'Entry')
 			{
@@ -223,11 +223,11 @@ class EntriesController extends BaseController
 
 		if ($variables['section']->type == SectionType::Single)
 		{
-			$variables['crumbs'][] = array('label' => 'Singles', 'url' => UrlHelper::getUrl('entries/singles'));
+			$variables['crumbs'][] = array('label' => Craft::t('Singles'), 'url' => UrlHelper::getUrl('entries/singles'));
 		}
 		else
 		{
-			$variables['crumbs'][] = array('label' => $variables['section']->name, 'url' => UrlHelper::getUrl('entries/'.$variables['section']->handle));
+			$variables['crumbs'][] = array('label' => Craft::t($variables['section']->name), 'url' => UrlHelper::getUrl('entries/'.$variables['section']->handle));
 
 			if ($variables['section']->type == SectionType::Structure)
 			{
@@ -286,8 +286,12 @@ class EntriesController extends BaseController
 			}
 		}
 
+		// Set the base CP edit URL
+		// - Can't just use the entry's getCpEditUrl() because that might include the locale ID when we don't want it
+		$variables['baseCpEditUrl'] = 'entries/'.$variables['section']->handle.'/{id}';
+
 		// Set the "Continue Editing" URL
-		$variables['continueEditingUrl'] = 'entries/'.$variables['section']->handle.'/{id}' .
+		$variables['continueEditingUrl'] = $variables['baseCpEditUrl'] .
 			(isset($variables['draftId']) ? '/drafts/'.$variables['draftId'] : '') .
 			(craft()->isLocalized() && craft()->getLanguage() != $variables['localeId'] ? '/'.$variables['localeId'] : '');
 
@@ -368,26 +372,46 @@ class EntriesController extends BaseController
 
 		$entry = $this->_populateEntryModel();
 
+		// Make sure the user is allowed to edit entries in this section
+		craft()->userSession->requirePermission('editEntries:'.$entry->sectionId);
+
 		if (!$entry->id)
 		{
 			// Make sure the user is allowed to create entries in this section
 			craft()->userSession->requirePermission('createEntries:'.$entry->sectionId);
 
-			// Make sure the user is allowed to publish entries in this section, or that this is disabled
-			if ($entry->enabled && !craft()->userSession->checkPermission('publishEntries:'.$entry->sectionId))
+			if ($entry->enabled)
 			{
-				$entry->enabled = false;
+				// Make sure the user is allowed to make live changes in this section
+				if (!craft()->userSession->checkPermission('publishEntries:'.$entry->sectionId))
+				{
+					// Let them save it, but as a disabled entry.
+					$entry->enabled = false;
+				}
 			}
 		}
 		else
 		{
-			// Make sure the user is allowed to edit entries in this section
-			craft()->userSession->requirePermission('editEntries:'.$entry->sectionId);
-
 			if ($entry->enabled)
 			{
-				// Make sure the user is allowed to edit live entries in this section
+				// Make sure the user is allowed to make live changes in this section
 				craft()->userSession->requirePermission('publishEntries:'.$entry->sectionId);
+			}
+
+			// Is this another user's entry (and it's not a Single)?
+			if (
+				$entry->authorId != craft()->userSession->getUser()->id &&
+				$entry->getSection()->type != SectionType::Single
+			)
+			{
+				// Make sure they have permission to edit those
+				craft()->userSession->requirePermission('editPeerEntries:'.$entry->sectionId);
+
+				if ($entry->enabled)
+				{
+					// Make sure they have permission to make live changes to those
+					craft()->userSession->requirePermission('publishPeerEntries:'.$entry->sectionId);
+				}
 			}
 		}
 
@@ -444,7 +468,8 @@ class EntriesController extends BaseController
 		$this->requirePostRequest();
 
 		$entryId = craft()->request->getRequiredPost('entryId');
-		$entry = craft()->entries->getEntryById($entryId);
+		$localeId = craft()->request->getPost('locale');
+		$entry = craft()->entries->getEntryById($entryId, $localeId);
 		$currentUser = craft()->userSession->getUser();
 
 		if ($entry->authorId == $currentUser->id)
@@ -579,22 +604,36 @@ class EntriesController extends BaseController
 				$variables['entry']->sectionId = $variables['section']->id;
 				$variables['entry']->authorId = craft()->userSession->getUser()->id;
 				$variables['entry']->enabled = true;
+
+				if (!empty($variables['localeId']))
+				{
+					$variables['entry']->locale = $variables['localeId'];
+				}
 			}
 		}
 
-		// More permission enforcement
+		// Is it a new entry?
 		if (!$variables['entry']->id)
 		{
+			// Make sure they have permission to create new entries in this section
 			craft()->userSession->requirePermission('createEntries'.$variables['permissionSuffix']);
 		}
-		else if ($variables['entry']->authorId != craft()->userSession->getUser()->id)
+		else
 		{
-			craft()->userSession->requirePermission('editPeerEntries'.$variables['permissionSuffix']);
-		}
+			// If it's another user's entry (and it's not a Single), make sure they have permission to edit those
+			if (
+				$variables['entry']->authorId != craft()->userSession->getUser()->id &&
+				$variables['entry']->getSection()->type != SectionType::Single
+			)
+			{
+				craft()->userSession->requirePermission('editPeerEntries'.$variables['permissionSuffix']);
+			}
 
-		if ($variables['entry']->id && $variables['entry']->getClassHandle() == 'EntryDraft')
-		{
-			if ($variables['entry']->creatorId != craft()->userSession->getUser()->id)
+			// If it's another user's draft, make sure they have permission to edit those
+			if (
+				$variables['entry']->getClassHandle() == 'EntryDraft' &&
+				$variables['entry']->creatorId != craft()->userSession->getUser()->id
+			)
 			{
 				craft()->userSession->requirePermission('editPeerEntryDrafts'.$variables['permissionSuffix']);
 			}
@@ -639,7 +678,7 @@ class EntriesController extends BaseController
 			}
 
 			$variables['tabs'][] = array(
-				'label' => $tab->name,
+				'label' => Craft::t($tab->name),
 				'url'   => '#tab'.($index+1),
 				'class' => ($hasErrors ? 'error' : null)
 			);

@@ -155,7 +155,16 @@ class TableFieldType extends BaseFieldType
 
 		if ($columns)
 		{
-			if ($value === null && $this->isFresh())
+			// Translate the column headings
+			foreach ($columns as &$column)
+			{
+				if (!empty($column['heading']))
+				{
+					$column['heading'] = Craft::t($column['heading']);
+				}
+			}
+
+			if ($this->isFresh())
 			{
 				$defaults = $this->getSettings()->defaults;
 

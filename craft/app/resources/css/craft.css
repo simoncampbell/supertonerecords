@@ -275,12 +275,12 @@ body.rtl .content.has-sidebar .show-sidebar { right: -24px; }
 
 .content.has-sidebar .show-sidebar:hover { color: #0d78f2; }
 
-.content.has-sidebar .show-sidebar:before { font-family: 'Craft'; speak: none; -webkit-font-feature-settings: "liga", "dlig"; -moz-font-feature-settings: "liga=1, dlig=1"; -moz-font-feature-settings: "liga", "dlig"; -ms-font-feature-settings: "liga", "dlig"; -o-font-feature-settings: "liga", "dlig"; font-feature-settings: "liga", "dlig"; text-rendering: optimizeLegibility; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: subpixel-antialiased; display: inline-block; text-align: center; font-style: normal; vertical-align: middle; word-wrap: normal !important; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; width: 41px; line-height: 24px; }
-body.ltr .content.has-sidebar .show-sidebar:before { content: 'menurarr'; }
-body.rtl .content.has-sidebar .show-sidebar:before { content: 'menularr'; }
+.content.has-sidebar .show-sidebar:before { font-family: 'Craft'; speak: none; -webkit-font-feature-settings: "liga", "dlig"; -moz-font-feature-settings: "liga=1, dlig=1"; -moz-font-feature-settings: "liga", "dlig"; -ms-font-feature-settings: "liga", "dlig"; -o-font-feature-settings: "liga", "dlig"; font-feature-settings: "liga", "dlig"; text-rendering: optimizeLegibility; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: subpixel-antialiased; display: inline-block; text-align: center; font-style: normal; vertical-align: middle; word-wrap: normal !important; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; width: 43px; line-height: 24px; }
+body.ltr .content.has-sidebar .show-sidebar:before { content: 'menu rarr'; }
+body.rtl .content.has-sidebar .show-sidebar:before { content: 'menu larr'; }
 
-body.ltr .content.has-sidebar .show-sidebar.showing:before { content: 'menularr'; }
-body.rtl .content.has-sidebar .show-sidebar.showing:before { content: 'menurarr'; }
+body.ltr .content.has-sidebar .show-sidebar.showing:before { content: 'menu larr'; }
+body.rtl .content.has-sidebar .show-sidebar.showing:before { content: 'menu rarr'; }
 
 .content.has-sidebar .sidebar { position: absolute; top: -24px; padding: 24px; width: 170px; overflow: auto; }
 body.ltr .content.has-sidebar .sidebar { left: -218px; }
@@ -1202,6 +1202,11 @@ body .redactor_dropdown { z-index: 100; }
 
 body .redactor_editor { background: none; border: none; border-top: 1px solid rgba(0, 0, 0, 0.05); }
 
+body.ltr .redactor_editor ul, body.ltr .redactor_editor ol { padding-left: 2em !important; }
+body.rtl .redactor_editor ul, body.rtl .redactor_editor ol { padding-right: 2em !important; }
+body.ltr .redactor_editor ul, body.ltr .redactor_editor ol { padding-right: 0 !important; }
+body.rtl .redactor_editor ul, body.rtl .redactor_editor ol { padding-left: 0 !important; }
+
 body .redactor_editor ul { list-style-type: disc; }
 
 body .redactor_box textarea { border-top-left-radius: 0; border-top-right-radius: 0; }
@@ -1211,7 +1216,7 @@ body #redactor_modal footer button:first-child { border-bottom-left-radius: 3px;
 body #redactor_modal footer button:last-child { border-bottom-right-radius: 3px; }
 
 /** Selects  Waiting on this bug to get fixed before Firefox gets our fancy selects: https://bugzilla.mozilla.org/show_bug.cgi?id=649849 */
-@media screen and (-webkit-min-device-pixel-ratio: 0) { .select, .select select { border-radius: 3px; }
+@media screen and (-webkit-min-device-pixel-ratio: 0) { .select, .select select { border-radius: 3px; white-space: nowrap; }
   .select { display: inline-block; position: relative; background-image: -webkit-linear-gradient(white, #fafafa); background-image: -moz-linear-gradient(white, #fafafa); background-image: -ms-linear-gradient(white, #fafafa); background-image: -o-linear-gradient(white, #fafafa); background-image: linear-gradient(white, #fafafa); -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 1px 5px rgba(0, 0, 0, 0.07); -moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 1px 5px rgba(0, 0, 0, 0.07); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 1px 5px rgba(0, 0, 0, 0.07); }
   .select:after { font-family: 'Craft'; speak: none; -webkit-font-feature-settings: "liga", "dlig"; -moz-font-feature-settings: "liga=1, dlig=1"; -moz-font-feature-settings: "liga", "dlig"; -ms-font-feature-settings: "liga", "dlig"; -o-font-feature-settings: "liga", "dlig"; font-feature-settings: "liga", "dlig"; text-rendering: optimizeLegibility; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: subpixel-antialiased; display: inline-block; text-align: center; font-style: normal; vertical-align: middle; word-wrap: normal !important; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; position: absolute; top: 10px; font-size: 10px; content: '▼'; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
   body.ltr .select:after { right: 9px; }
@@ -1222,7 +1227,7 @@ body #redactor_modal footer button:last-child { border-bottom-right-radius: 3px;
   .select.fullwidth select { min-width: 100%; }
   .select:hover select:not(:focus) { border-color: #ccc; }
   .select select:focus { border-color: #7dafe8; outline: none; -webkit-box-shadow: 0 0 2px #33aaff, inset 0 0 0 1px rgba(51, 170, 255, 0.5); -moz-box-shadow: 0 0 2px #33aaff, inset 0 0 0 1px rgba(51, 170, 255, 0.5); box-shadow: 0 0 2px #33aaff, inset 0 0 0 1px rgba(51, 170, 255, 0.5); }
-  .select.small:after { top: 3px; }
+  .select.small:after { top: 9px; }
   .select.small select { padding-top: 4px; padding-bottom: 4px; font-size: 11px; } }
 /* datepicker */
 .ui-datepicker { position: fixed; top: -300px; -padding: 10px; width: 210px; height: 210px; }

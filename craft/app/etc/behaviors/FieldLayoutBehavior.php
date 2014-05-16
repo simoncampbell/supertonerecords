@@ -28,7 +28,7 @@ class FieldLayoutBehavior extends BaseBehavior
 	}
 
 	/**
-	 * Returns the section's field layout.
+	 * Returns the owner's field layout.
 	 *
 	 * @return FieldLayoutModel
 	 */
@@ -52,7 +52,7 @@ class FieldLayoutBehavior extends BaseBehavior
 	}
 
 	/**
-	 * Sets the section's field layout.
+	 * Sets the owner's field layout.
 	 *
 	 * @param FieldLayoutModel $fieldLayout
 	 */

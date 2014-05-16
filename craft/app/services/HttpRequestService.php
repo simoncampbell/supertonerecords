@@ -122,6 +122,15 @@ class HttpRequestService extends \CHttpRequest
 		{
 			return $this->_segments[$num-1];
 		}
+		else if ($num < 0)
+		{
+			$totalSegs = count($this->_segments);
+
+			if (isset($this->_segments[$totalSegs + $num]))
+			{
+				return $this->_segments[$totalSegs + $num];
+			}
+		}
 	}
 
 	/**

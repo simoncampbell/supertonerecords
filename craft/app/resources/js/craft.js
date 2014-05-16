@@ -1308,6 +1308,32 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 			return;
 		}
 
+		// Is there a locale menu?
+		if (this.$localeMenuBtn.length)
+		{
+			this.localeMenu = this.$localeMenuBtn.menubtn().data('menubtn').menu;
+
+			// Figure out the initial locale
+			var $option = this.localeMenu.$options.filter('.sel:first');
+
+			if (!$option.length)
+			{
+				$option = this.localeMenu.$options.first();
+			}
+
+			if ($option.length)
+			{
+				this.locale = $option.data('locale');
+			}
+			else
+			{
+				// No locale options -- they must not have any locale permissions
+				this.settings.criteria = { id: '0' };
+			}
+
+			this.localeMenu.on('optionselect', $.proxy(this, 'onLocaleChange'));
+		}
+
 		this.onAfterHtmlInit();
 
 		if (this.settings.context == 'index')
@@ -1366,13 +1392,6 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 		{
 			this.statusMenu = this.$statusMenuBtn.menubtn().data('menubtn').menu;
 			this.statusMenu.on('optionselect', $.proxy(this, 'onStatusChange'));
-		}
-
-		// Locale changes
-		if (this.$localeMenuBtn.length)
-		{
-			this.localeMenu = this.$localeMenuBtn.menubtn().data('menubtn').menu;
-			this.localeMenu.on('optionselect', $.proxy(this, 'onLocaleChange'));
 		}
 
 		this.addListener(this.$search, 'textchange', $.proxy(function()
@@ -1571,7 +1590,8 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 						containerScrollTop = this.$scroller.scrollTop(),
 						containerHeight = this.$scroller.outerHeight();
 
-					var loadMore = (containerScrollHeight - containerScrollTop == containerHeight);
+					var loadMore = (containerScrollHeight - containerScrollTop <= containerHeight + 15);
+					console.log(containerScrollHeight, containerScrollTop, containerHeight, loadMore);
 
 				}
 
@@ -7175,6 +7195,7 @@ Craft.ImageHandler = Garnish.Base.extend(
 							{
 								var profileTool = new Craft.ImageAreaTool(settings.areaToolOptions);
 								profileTool.showArea(this.modal);
+								this.modal.cropAreaTool = profileTool;
 							}, this));
 						}, this), 1);
 					}
@@ -7236,10 +7257,12 @@ Craft.ImageModal = Garnish.Modal.extend(
 	originalWidth: 0,
 	originalHeight: 0,
 	constraint: 0,
+	cropAreaTool: null,
 
 
 	init: function($container, settings)
 	{
+		this.cropAreaTool = null;
 		this.base($container, settings);
 		this._postParameters = settings.postParameters;
 		this._cropAction = settings.cropAction;
@@ -7275,10 +7298,9 @@ Craft.ImageModal = Garnish.Modal.extend(
 
 		$img.height(newHeight).width(newWidth);
 		this.factor = factor;
-		var instance = $img.imgAreaSelect({instance: true});
-		if (instance)
+		if (this.cropAreaTool)
 		{
-			instance.update();
+			$img.imgAreaSelect({instance: true}).update();
 		}
 	},
 
@@ -7363,7 +7385,8 @@ Craft.ImageAreaTool = Garnish.Base.extend(
 			show: true,
 			persistent: true,
 			handles: true,
-			parent: $target.parent()
+			parent: $target.parent(),
+			classPrefix: 'imgareaselect'
 		};
 
 		var areaSelect = $target.imgAreaSelect(areaOptions);
