@@ -688,15 +688,15 @@ class FieldsService extends BaseApplicationComponent
 	/**
 	 * Assembles a field layout from post data.
 	 *
-	 * @param bool $createTabs Whether to create tabs, or just assign the fields directly to the layout.
+	 * @param bool $customizableTabs Whether the field layout has custom tabs.
 	 * @return FieldLayoutModel
 	 */
-	public function assembleLayoutFromPost($createTabs = true)
+	public function assembleLayoutFromPost($customizableTabs = true)
 	{
 		$postedFieldLayout = craft()->request->getPost('fieldLayout', array());
 		$requiredFields = craft()->request->getPost('requiredFields', array());
 
-		return $this->assembleLayout($postedFieldLayout, $requiredFields, $createTabs);
+		return $this->assembleLayout($postedFieldLayout, $requiredFields, $customizableTabs);
 	}
 
 	/**
@@ -704,10 +704,10 @@ class FieldsService extends BaseApplicationComponent
 	 *
 	 * @param array $postedFieldLayout
 	 * @param array|null $requiredFields
-	 * @param bool $createTabs
+	 * @param bool $customizableTabs Whether the field layout has custom tabs.
 	 * @return FieldLayoutModel
 	 */
-	public function assembleLayout($postedFieldLayout, $requiredFields, $createTabs = true)
+	public function assembleLayout($postedFieldLayout, $requiredFields, $customizableTabs = true)
 	{
 		$tabs = array();
 		$fields = array();
@@ -730,7 +730,7 @@ class FieldsService extends BaseApplicationComponent
 
 			$fields = array_merge($fields, $tabFields);
 
-			if ($createTabs)
+			if ($customizableTabs)
 			{
 				$tabSortOrder++;
 
@@ -754,10 +754,10 @@ class FieldsService extends BaseApplicationComponent
 	 * Saves a field layout.
 	 *
 	 * @param FieldLayoutModel $layout
-	 * @param bool $saveTabs Whether to save tab records.
+	 * @param bool $customizableTabs Whether the field layout has custom tabs.
 	 * @return bool
 	 */
-	public function saveLayout(FieldLayoutModel $layout, $saveTabs = true)
+	public function saveLayout(FieldLayoutModel $layout, $customizableTabs = true)
 	{
 		// First save the layout
 		$layoutRecord = new FieldLayoutRecord();
@@ -765,7 +765,7 @@ class FieldsService extends BaseApplicationComponent
 		$layoutRecord->save(false);
 		$layout->id = $layoutRecord->id;
 
-		if ($saveTabs)
+		if ($customizableTabs)
 		{
 			foreach ($layout->getTabs() as $tab)
 			{

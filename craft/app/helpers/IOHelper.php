@@ -1185,21 +1185,28 @@ class IOHelper
 		{
 			$folderContents = static::getFolderContents($path, true, null, true, $suppressErrors);
 
-			foreach ($folderContents as $item)
+			if ($folderContents)
 			{
-				$item = static::normalizePathSeparators($item);
+				foreach ($folderContents as $item)
+				{
+					$item = static::normalizePathSeparators($item);
 
-				if (static::fileExists($item, $suppressErrors))
-				{
-					static::deleteFile($item, $suppressErrors);
+					if (static::fileExists($item, $suppressErrors))
+					{
+						static::deleteFile($item, $suppressErrors);
+					}
+					elseif (static::folderExists($item, $suppressErrors))
+					{
+						static::deleteFolder($item, $suppressErrors);
+					}
 				}
-				elseif (static::folderExists($item, $suppressErrors))
-				{
-					static::deleteFolder($item, $suppressErrors);
-				}
+
+				return true;
 			}
-
-			return true;
+			else
+			{
+				Craft::log('Tried to read the folder contents of '.$path.', but could not.', LogLevel::Error);
+			}
 		}
 		else
 		{
@@ -1367,7 +1374,7 @@ class IOHelper
 			'php'         => array('label' => Craft::t('PHP'),         'extensions' => array('php')),
 			'powerpoint'  => array('label' => Craft::t('PowerPoint'),  'extensions' => array('ppt','pptx','pps','pptm','potx')),
 			'text'        => array('label' => Craft::t('Text'),        'extensions' => array('txt','text')),
-			'video'       => array('label' => Craft::t('Video'),       'extensions' => array('avchd','asf','asx','avi','flv','fla','mov','m4v','mng','mpeg','mpg','m1s','mp2v','m2v','m2s','mp4','mkv','qt','flv','mp4','ogg','ogv','rm','wmv')),
+			'video'       => array('label' => Craft::t('Video'),       'extensions' => array('avchd','asf','asx','avi','flv','fla','mov','m4v','mng','mpeg','mpg','m1s','mp2v','m2v','m2s','mp4','mkv','qt','flv','mp4','ogg','ogv','rm','wmv','webm')),
 			'word'        => array('label' => Craft::t('Word'),        'extensions' => array('doc','docx','dot','docm','dotm')),
 			'xml'         => array('label' => Craft::t('XML'),         'extensions' => array('xml')),
 		);

@@ -16,6 +16,8 @@ namespace Craft;
  * @property AssetSourcesService         $assetSources         The assets sources service
  * @property AssetsService               $assets               The assets service
  * @property AssetTransformsService      $assetTransforms      The assets sizes service
+ * @property CacheService                $cache                The cache service
+ * @property CategoriesService           $categories           The categories service
  * @property ComponentsService           $components           The components service
  * @property ConfigService               $config               The config service
  * @property ContentService              $content              The content service
@@ -37,18 +39,22 @@ namespace Craft;
  * @property ImagesService               $images               The images service
  * @property InstallService              $install              The images service
  * @property LocalizationService         $localization         The localization service
+ * @property MatrixService               $matrix               The matrix service
  * @property MigrationsService           $migrations           The migrations service
  * @property PathService                 $path                 The path service
  * @property PluginsService              $plugins              The plugins service
  * @property RelationsService            $relations            The relations service
  * @property ResourcesService            $resources            The resources service
  * @property RoutesService               $routes               The routes service
+ * @property SearchService               $search               The search service
  * @property SectionsService             $sections             The sections service
  * @property SecurityService             $security             The security service
+ * @property StructuresService           $structures           The structures service
  * @property SystemSettingsService       $systemSettings       The system settings service
- * @property TasksService                $tasks                The tasks service
- * @property TemplatesService            $templates            The template service
  * @property TagsService                 $tags                 The tags service
+ * @property TasksService                $tasks                The tasks service
+ * @property TemplateCacheService        $templateCache        The template cache service
+ * @property TemplatesService            $templates            The template service
  * @property UpdatesService              $updates              The updates service
  * @property UserGroupsService           $userGroups           The user groups service
  * @property UserPermissionsService      $userPermissions      The user permission service
@@ -75,6 +81,7 @@ class WebApp extends \CWebApplication
 	private $_templatePath;
 	private $_editionComponents;
 	private $_pendingEvents;
+	private $_gettingLanguage = false;
 
 	/**
 	 * Processes resource requests before anything else has a chance to initialize.
@@ -269,7 +276,18 @@ class WebApp extends \CWebApplication
 	{
 		if (!isset($this->_language))
 		{
-			$this->setLanguage($this->_getTargetLanguage());
+			// Defend against an infinite getLanguage() loop
+			if (!$this->_gettingLanguage)
+			{
+				$this->_gettingLanguage = true;
+				$this->setLanguage($this->_getTargetLanguage());
+			}
+			else
+			{
+				// We tried to get the language, but something went wrong. Use fallback to prevent infinite loop.
+				$this->setLanguage($this->_getFallbackLanguage());
+				$this->_gettingLanguage = false;
+			}
 		}
 
 		return $this->_language;
@@ -799,17 +817,27 @@ class WebApp extends \CWebApplication
 		}
 		else
 		{
-			// See if we have the CP translated in one of the user's browsers preferred language(s)
-			$language = $this->getTranslatedBrowserLanguage();
-
-			// Default to the source language.
-			if (!$language)
-			{
-				$language = $this->sourceLanguage;
-			}
-
-			return $language;
+			return $this->_getFallbackLanguage();
 		}
+	}
+
+	/**
+	 * Tries to find a language match with the user's browser's preferred language(s).  If not uses the app's sourceLanguage.
+	 *
+	 * @return string
+	 */
+	private function _getFallbackLanguage()
+	{
+		// See if we have the CP translated in one of the user's browsers preferred language(s)
+		$language = $this->getTranslatedBrowserLanguage();
+
+		// Default to the source language.
+		if (!$language)
+		{
+			$language = $this->sourceLanguage;
+		}
+
+		return $language;
 	}
 
 	/**
@@ -934,13 +962,5 @@ class WebApp extends \CWebApplication
 
 		// YOU SHALL NOT PASS
 		$this->end();
-	}
-
-	/**
-	 * Sets the correct caching drivers on craft()->cache based on what's in craft()->config->get('cacheMethod')
-	 */
-	private function _processCacheComponent()
-	{
-
 	}
 }
