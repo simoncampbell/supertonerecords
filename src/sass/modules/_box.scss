@@ -1,0 +1,22 @@
+.m-box {
+	margin: 0 0 15px 0;
+
+	.breakpoint-medium-and-above & {
+		float: left;
+		margin: 0 0 30px 0;
+	}
+}
+
+.m-box--small {
+
+	.breakpoint-medium-and-above & {
+		width: 255px;
+	}
+}
+
+.m-box--medium {
+
+	.breakpoint-medium-and-above & {
+		width: 540px;
+	}
+}

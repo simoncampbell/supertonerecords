@@ -1,0 +1,12 @@
+.page {
+	max-width: 320px;
+	margin: 0 auto;
+
+	.breakpoint-medium-and-above & {
+		max-width: 540px;
+	}
+
+	.breakpoint-large-and-above & {
+		max-width: 100%;
+	}
+}

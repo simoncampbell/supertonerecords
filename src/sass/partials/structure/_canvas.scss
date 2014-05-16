@@ -1,0 +1,11 @@
+.canvas {
+	padding: 15px;
+
+	.breakpoint-medium-and-above & {
+		padding: 20px;
+	}
+
+	.breakpoint-large-and-above & {
+		padding: 0;
+	}
+}

@@ -16,11 +16,11 @@
 .page-tabs {
 	margin-bottom: 15px;
 
-	@include media($lap-and-up) {
+	.breakpoint-medium-and-above & {
 		margin-bottom: 20px
 	}
 
-	@include media($desk-and-up) {
+	.breakpoint-large-and-above & {
 		display: none;
 	}
 
@@ -62,7 +62,7 @@
 .tab-content {
 	display: none;
 
-	@include media($desk-and-up) {
+	.breakpoint-large-and-above & {
 		display: block;
 	}
 }

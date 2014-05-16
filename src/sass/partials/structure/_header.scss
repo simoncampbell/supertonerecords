@@ -1,0 +1,17 @@
+.header {
+	margin: 0 0 20px 0;
+
+	.breakpoint-medium-and-above & {
+		margin: 0 0 30px 0;
+		padding: 0 20px;
+	}
+
+	.breakpoint-large-and-above & {
+		position: absolute;
+		top: 30px;
+		left: 30px;
+		width: 255px;
+		padding: 0;
+		margin: 0 0 20px 0;
+	}
+}

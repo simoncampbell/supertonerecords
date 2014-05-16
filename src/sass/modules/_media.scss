@@ -1,0 +1,35 @@
+.m-media {
+	position: relative;
+}
+
+.m-media__object {
+
+}
+
+.m-media__play {
+	background: #CE0013;
+	background: rgba(#CE0013, .8);
+	width: 46px;
+	height: 46px;
+	border-radius: 50px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -23px;
+	margin-top: -23px;
+	cursor: pointer;
+
+	&:after {
+		position: absolute;
+		content: " ";
+		top: 46px;
+		left: 19px;
+		height: 0;
+		width: 0;
+		border: solid transparent;
+		border-left-color: white;
+		border-width: 7px;
+		border-left-width: 12px;
+		margin-top: -30px;
+	}
+}
