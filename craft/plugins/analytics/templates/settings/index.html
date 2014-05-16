@@ -1,0 +1,133 @@
+{% import "_includes/forms" as forms %}
+
+{% includeCssResource 'analytics/css/disableSave.css' %}
+
+{% if craft.oauth is not defined %}
+
+	<h2 class="first">{{'OAuth Not Installed'|t}}</h2>
+
+
+	{% set oauth = craft.plugins.getPlugin('oauth', false) %}
+
+	{% if oauth %}
+		{% if not oauth.isInstalled %}
+			<p>{{'OAuth plugin is present but not installed. Please install & enable it.'|t}}</p>
+		{% elseif not oauth.isEnabled %}
+			<p>{{'OAuth is installed but is disabled. Please enable it.'|t}}</p>
+		{% else %}
+			{{'OAuth is ready'|t}}
+		{% endif %}
+
+		<div class="buttons">
+			<a class="btn" href="{{url('settings/plugins')}}">{{'Manage plugins'|t}}</a>
+		</div>
+	{% else %}
+		<p>{{'Analytics plugin requires OAuth plugin for Craft.'|t}}</p>
+
+		<div class="buttons">
+			<a class="btn" href="{{actionUrl('analytics/plugin/download', {plugin:'oauth'})}}">{{'Download OAuth plugin'|t}}</a>
+		</div>
+	{% endif %}
+
+{% else %}
+
+	{% set provider = craft.oauth.getProvider('google', 'analytics.system') %}
+
+	{% if provider['clientId'] is defined %}
+
+		{% if provider.clientId is empty %}
+			{% set provider = false %}
+		{% endif %}
+
+	{% else %}
+	    {% set provider = false %}
+	{% endif %}
+
+	{% if not provider %}
+		<h2 class="first">{{'Google provider not configured'|t}}</h2>
+		<p>{{'Please fill API client id & secret for Analytics provider.'|t}}</p>
+
+		<div class="buttons">
+			<a class="btn" href="{{url('oauth/settings/google')}}">{{'Google OAuth settings'|t}}</a>
+		</div>
+	{% else %}
+
+		{% set token = craft.oauth.getSystemToken('google', 'analytics.system') %}
+
+		{% if token %}
+			{% if not token.getRealToken %}
+				{% set token = false %}
+			{% endif %}
+		{% endif %}
+
+		{% set account = false %}
+
+		{% if token %}
+			{% set account = craft.analytics.account() %}
+		{% endif %}
+
+		{% if account %}
+
+
+			<h2 class="first">{{'Google Analytics Account'|t}}</h2>
+
+			<p>{{'You are authenticated to Google Analytics with the following account'|t}} :</p>
+
+			<ul>
+				<li><strong>{{'UID'|t}} : </strong> {{account.uid}}</li>
+				<li><strong>{{'Name'|t}} : </strong> {{account.name}}</li>
+			</ul>
+
+			<p>
+				<a class="btn small" href="{{craft.oauth.disconnect('google', 'analytics.system')}}">{{'Disconnect'|t}}</a>
+			</p>
+
+			<hr />
+
+			<h2 class="first">{{'Plugin Settings'|t}}</h2>
+
+            {{ forms.selectField({
+                first: true,
+                label: "Web Profile"|t,
+                instructions: "Select an Analytics web profile to associate with your Craft website"|t,
+                options: craft.analytics.properties(),
+                name: 'profileId',
+                value: settings.profileId
+            }) }}
+
+            {{ forms.textField({
+                label: "Real-Time Refresh Interval"|t,
+                instructions: "Interval in seconds between request to real-time API"|t,
+                name: 'realtimeRefreshInterval',
+                value: (settings.realtimeRefreshInterval ? settings.realtimeRefreshInterval : '10'),
+                size: 4
+            }) }}
+
+
+			<div class="buttons">
+				<input type="submit" class="btn submit force" value="{{'Save'|t}}">
+			</div>
+
+
+		{% else %}
+
+			<h2 class="first">{{'Google Analytics Account'|t}}</h2>
+
+			<p>{{'You need to connect Craft to a Google account in order to get started.'|t}}</p>
+
+			<p>{{"Getting errors trying to connect"|t}} ? <a href="{{url('oauth/settings/google')}}">{{"Check Google API key & secret in OAuth settings"|t}}</a>.</p>
+
+			{% set scope = [
+			    'https://www.googleapis.com/auth/userinfo.profile',
+			    'https://www.googleapis.com/auth/userinfo.email',
+			    'https://www.googleapis.com/auth/analytics'
+			    ] %}
+
+			<p>
+				<a class="btn submit" href="{{craft.oauth.connect('google', scope, 'analytics.system')}}">{{"Connect to Google Analytics"|t}}</a>
+			</p>
+
+		{% endif %}
+	{% endif %}
+
+{% endif %}
