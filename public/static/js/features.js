@@ -41,7 +41,7 @@ window.SUP || (SUP = {});
                     $container.imagesLoaded(function() {
                         $container.isotope({
                             // options
-                            itemSelector: '.box',
+                            itemSelector: '.m-box',
                             layoutMode: 'masonry',
                             masonry: {
                                 columnWidth: 255,

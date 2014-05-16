@@ -3,18 +3,21 @@
 	font-size: 120%;
 }
 
+p {
+	line-height: 1.4;
+}
 
-.type {
+
+.copy {
 
 	p {
 		margin-bottom: 10px;
-		
-		line-height: 1.5;
 	}
 }
 
 
-.type-intro {
+.copy-intro {
+	
 	p {
 
 		&:first-of-type {

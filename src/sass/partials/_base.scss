@@ -1,0 +1,25 @@
+* {
+	&,
+	&:before,
+	&:after {
+		@include box-sizing(border-box);
+	}
+}
+
+html {
+	font-size: 87.5%;
+}
+
+body {
+	background: #000;
+
+	.breakpoint-large-and-above & {
+		background: #222 url("/static/images/bg-body.gif") repeat-y;
+	}
+}
+
+img {
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+}

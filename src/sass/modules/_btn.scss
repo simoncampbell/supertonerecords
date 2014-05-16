@@ -1,9 +1,19 @@
 %button {
-  	@include button(simple, red);
+  	@include button(simple, $red);
   	-webkit-font-smoothing: antialiased;
   	// font-size: $base-font-size;
   	font-weight: bold;
   	line-height: 1em;
+}
+
+button,
+input[type="submit"] {
+    @extend %button;
+    @include appearance(none);
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
 // .btn {

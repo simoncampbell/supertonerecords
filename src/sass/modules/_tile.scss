@@ -1,0 +1,20 @@
+.m-tile {
+	background: #fff;
+	border-radius: 4px;
+}
+
+.m-tile__media {
+	border-radius: 4px 4px 0 0;
+
+	img {
+		border-radius: 4px 4px 0 0;
+	}
+}
+
+.m-tile__body {
+	padding: 20px;
+
+	p:last-of-type {
+		margin-bottom: 0;
+	}
+}

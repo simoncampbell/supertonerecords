@@ -1,0 +1,78 @@
+// Specify where the font files are located.
+$ss-pika-dir: '../fonts/ss-pika/';
+$ss-social-regular-dir: '../fonts/ss-social/';
+$ss-social-circle-dir: '../fonts/ss-social-circle/';
+$ss-standard-dir: '../fonts/ss-standard/';
+$ss-symbolicons-block-dir: '../fonts/ss-symbolicons-block/';
+$ss-symbolicons-line-dir: '../fonts/ss-symbolicons-line/';
+
+// Import the base file.
+@import "symbolset";
+
+@import "ss-social-circle";
+
+
+.icon {
+
+	span {
+		@include hide-text();
+	}
+}
+
+.i--social {
+	color: #999;
+
+	&:before {
+		@extend %ss-social-circle;
+	}
+
+	&:hover {
+		color: #fff;
+	}
+}
+
+.i--social__mail {
+
+	&:before {
+		@extend %c-mail;
+	}
+}
+
+.i--social__facebook {
+
+	&:before {
+		@extend %c-facebook;
+	}
+}
+
+.i--social__twitter {
+
+	&:before {
+		@extend %c-twitter;
+	}
+}
+
+.i--social__youtube {
+
+	&:before {
+		@extend %c-youtube;
+	}
+}
+
+.i--social__pinterest {
+
+	&:before {
+		@extend %c-pinterest;
+	}
+}
+
+.i--social__gplus {
+
+	&:before {
+		@extend %c-googleplus;
+	}
+}
+
+.i--large {
+	font-size: 200%;
+}
