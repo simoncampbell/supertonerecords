@@ -29,9 +29,9 @@ return array(
 
     'supertonerecords.com' => array(
         'server' => 'localhost',
-        'user' => 'supertone_prod',
-        'password' => 'REZLVsJJYVERyJTuPN3VvGxBZnNd2h',
-        'database' => 'supertone_prod',
+        'user' => 'av01727',
+        'password' => '877.e34edTpe',
+        'database' => 'av01727supertonerecords_prod',
     ),
 
 );
