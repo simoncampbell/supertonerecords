@@ -1,9 +1,29 @@
 <IfModule mod_rewrite.c>
+
 	RewriteEngine On
+
+	# ----------------------------------------------------------------------
+	# Always include the www
+	# ----------------------------------------------------------------------
+
+	RewriteCond %{HTTP_HOST} ^supertonerecords.com$ [NC]
+	RewriteCond %{HTTP_HOST} !(^www\.supertonerecords.com$) [NC]
+	RewriteRule ^(.*)$ http://www\.supertonerecords.com/$1 [R=301,L]
+
+	# ----------------------------------------------------------------------
+	# Do NOT redirect cloudflare-source.example.com
+	# ----------------------------------------------------------------------
+
+	RewriteCond %{HTTP_HOST} !^cloudflare-source\.
+
+	# ----------------------------------------------------------------------
+	# Remove index.php
+	# ----------------------------------------------------------------------
 
 	# Send would-be 404 requests to Craft
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_URI} !^/(favicon\.ico|apple-touch-icon.*\.png)$ [NC]
 	RewriteRule (.+) index.php?p=$1 [QSA,L]
+
 </IfModule>

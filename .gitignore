@@ -3,6 +3,7 @@
 *.pyc
 .sass-cache
 
+craft/config/db.php
 craft/storage
 
 # Static
