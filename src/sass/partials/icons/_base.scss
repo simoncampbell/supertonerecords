@@ -73,6 +73,13 @@ $ss-symbolicons-line-dir: '../fonts/ss-symbolicons-line/';
 	}
 }
 
+.i--social__soundcloud {
+
+	&:before {
+		@extend %c-soundcloud;
+	}
+}
+
 .i--large {
 	font-size: 180%;
 }
