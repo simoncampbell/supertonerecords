@@ -27,5 +27,6 @@ return array(
     'supertonerecords.com' => array(
         'siteUrl' => 'http://supertonerecords.com',
         'cooldownDuration' => 0,
+        'overridePHPSessionLocation' => false
     )
 );
